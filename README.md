@@ -3,7 +3,7 @@
 
 ```rust
 
-Application URL : <a href="http://americanbuzzle.com/"> http://americanbuzzle.com/ </a>
+Application URL : http://americanbuzzle.com/
 
 ```
 
