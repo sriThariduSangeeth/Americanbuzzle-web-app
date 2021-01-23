@@ -26,9 +26,12 @@ Application URL : http://americanbuzzle.com/
     <li>MySQL DB</li>
 </ul> 
 
-  <a>
-    <img src="https://img.shields.io/badge/Build-Passed-green" alt="Build: Passed" height="18">
-  </a>
- <a>
-    <img src="https://raw.githubusercontent.com/acervenky/animated-github-badges/master/assets/devbadge.gif" alt="Build: Passed" height="18">
-  </a>
+<a>
+   <img src="https://img.shields.io/badge/Build-Passed-green" alt="Build: Passed" height="18">
+  <img src="https://raw.githubusercontent.com/acervenky/animated-github-badges/master/assets/devbadge.gif" alt="Build: Passed" height="18">
+</a>
+  
+<h4 align="center">Here is a screenshot of the Architecture Design</h4>
+<!-- image -->
+<img src="./assest/webapp.png"
+alt="App Screenshots" height="400" width="880">
