@@ -1,26 +1,23 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { CategoryComponent } from './category/category.component';
-import { LatestItemsComponent } from './latest-items/latest-items.component';
-import { SearchComponent } from './search/search.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
-    CategoryComponent,
-    LatestItemsComponent,
-    SearchComponent
+    MaterialModule
   ],
   imports: [
     BrowserModule,
     MaterialModule,
+    MatSliderModule,
     BrowserAnimationsModule,
     AppRoutingModule
   ],
