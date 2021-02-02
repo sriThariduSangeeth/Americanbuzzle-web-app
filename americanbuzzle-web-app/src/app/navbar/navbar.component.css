@@ -6,14 +6,86 @@
   width: 300px;
 }
 
-.sidenav .mat-toolbar {
-  /* background: inherit; */
-  /* background-color: rgb(228, 87, 31); */
+
+.sidenav .sidenav-list .nav-item {
+  cursor: pointer
 }
 
+.is-active {
+  background-color: #76b900;
+}
+
+.mat-nav-list .mat-list-item:focus,
+.mat-action-list .mat-list-item:focus,
+.mat-list-option:focus {
+  background: #76b900 !important;
+}
 
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 50;
+}
+
+.nav-img{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15vh;
+  padding-bottom: 10vh;
+}
+.nav-img .header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+  height: 20vh;
+  width: 20vh;
+  border: solid;
+}
+.nav-img .pro-name{
+  border-style: solid;
+  border-radius: 15px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+svg {
+  max-width: 100%;
+}
+
+@-webkit-keyframes logo_kinetics {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes logo_kinetics {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.e-albania {
+  height: 100px;
+  position: relative;
+  width: 100px;
+}
+.e-albania svg:not(#orbit) {
+  -webkit-animation: logo_kinetics 2.5s linear infinite normal forwards;
+          animation: logo_kinetics 2.5s linear infinite normal forwards;
+  position: absolute;
+  top: -50%;
+  left: 0;
+  transform-origin: bottom center;
+}
+
+.logo-title {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: normal;
+  color: #fff;
+  font-size: 18px;
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
