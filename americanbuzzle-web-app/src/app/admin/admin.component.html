@@ -1,0 +1,150 @@
+<div fxFlex fxLayout="row" fxLayoutAlign="end center">
+
+    <button mat-icon-button routerLink="/main" class="nav-item" color="accent">
+            <mat-icon>dashboard</mat-icon>
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+
+    <button mat-mini-fab color="accent">
+            <mat-icon>smart_button</mat-icon>
+        </button>
+
+</div>
+<div class="grid-container">
+    <div fxFlex fxLayout="row" fxLayoutAlign="center">
+        <mat-card class="dashboard-card mat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}">
+
+            <mat-card-header>
+                <mat-icon>shopping_cart</mat-icon>
+                <mat-card-title>{{registermode}}</mat-card-title>
+
+                <mat-card-subtitle>Registration</mat-card-subtitle>
+                <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+                    <div fxLayoutGap="20px">
+                        <button mat-raised-button (click)="submit()" color="primary" type="submit">Submit</button>
+                    </div>
+
+                </div>
+            </mat-card-header>
+
+            <mat-card-content class="dashboard-card-content" color="primary">
+                <!-- <cdk-virtual-scroll-viewport > -->
+                <div fxLayout="row" fxLayoutAlign="space-around start" fxLayoutGap="20px" class="stats-cards">
+                    <div class="" fxFlex="1 1 auto">
+                        <p>
+                            <mat-form-field class="form-field" appearance="standard">
+                                <mat-label>Post Title</mat-label>
+                                <input matInput placeholder="Title" [(ngModel)]="dname">
+                                <button mat-button *ngIf="dname" matSuffix mat-icon-button aria-label="Clear" (click)="dname=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <mat-icon matSuffix *ngIf="!dname">portrait</mat-icon>
+                                <mat-hint>Devide Gutter</mat-hint>
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field class="form-field" appearance="standard">
+                                <mat-label>Original post link</mat-label>
+                                <span matPrefix>https://www. &nbsp;</span>
+                                <input matInput placeholder="NIC Number" [(ngModel)]="dnic">
+                                <button mat-button *ngIf="dnic" matSuffix mat-icon-button aria-label="Clear" (click)="dnic=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <mat-icon matSuffix *ngIf="!dnic">share</mat-icon>
+                                <mat-hint>https://www.exmple.com</mat-hint>
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field class="form-field" appearance="fill">
+                                <mat-label>Select</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                                <mat-hint>Select post category</mat-hint>
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field class="form-field" appearance="outline">
+                                <mat-label>Post Description</mat-label>
+                                <input matInput placeholder="Description..." [(ngModel)]="daddress">
+                                <button mat-button *ngIf="daddress" matSuffix mat-icon-button aria-label="Clear" (click)="daddress=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <mat-icon matSuffix *ngIf="!daddress">keyboard</mat-icon>
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field class="form-field" appearance="outline">
+                                <mat-label>Post Create Date</mat-label>
+                                <input matInput placeholder="Email" [(ngModel)]="demail">
+                                <button mat-button *ngIf="demail" matSuffix mat-icon-button aria-label="Clear" (click)="demail=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <mat-icon matSuffix *ngIf="!demail">event_available</mat-icon>
+                                <mat-hint>YYYY-MM-DD (Today)</mat-hint>
+                            </mat-form-field>
+                        </p>
+
+                        <p>
+                            <mat-form-field class="form-field" appearance="outline">
+                                <mat-label>Post Expire Date</mat-label>
+                                <input matInput placeholder="Blood Group" [(ngModel)]="dblood">
+                                <button mat-button *ngIf="dblood" matSuffix mat-icon-button aria-label="Clear" (click)="dblood=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <mat-icon matSuffix *ngIf="!dblood">event_busy</mat-icon>
+                                <mat-hint>YYYY-MM-DD</mat-hint>
+                            </mat-form-field>
+                        </p>
+                    </div>
+                    <div fxFlex="1 1 auto">
+
+                        <div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="20px">
+                            <div class="container row">
+                                <div class="col-md-12">
+                                    <h1>Upload Post Image</h1>
+                                </div>
+                            </div>
+                            <div class="profile-picture">
+                                <img *ngIf="url" width=300 height=300 src="{{url}}" />
+                            </div>
+                            <div class="container row">
+                                <div class="col-md-6">
+                                    <input type="file" #fileUpload (change)="onFileChanged($event)" accept="image/*" id="fileUpload" name="fileUpload" multiple="multiple">
+
+                                </div>
+                            </div>
+
+
+                            <div class="container row">
+                                <div class="col-md-12">
+                                    <div *ngIf=message>{{message}}</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </div>
+                <!-- <p>
+              <mat-form-field appearance="outline">
+                <mat-label>Outline form field</mat-label>
+                <input matInput placeholder="Placeholder">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                <mat-hint>Hint</mat-hint>
+              </mat-form-field>
+            </p> -->
+
+                <!-- </cdk-virtual-scroll-viewport> -->
+
+            </mat-card-content>
+
+        </mat-card>
+
+    </div>
+</div>

@@ -11,6 +11,10 @@ import { map, shareReplay } from 'rxjs/operators';
 export class NavbarComponent {
 
   isDarkTheme:boolean = false;
+  hidden:boolean = true;
+
+  list: Array<string> = ["Crypto currency", "Fitness and health ", "Health and beauty","Consumer products","E-Commerce"];
+
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),

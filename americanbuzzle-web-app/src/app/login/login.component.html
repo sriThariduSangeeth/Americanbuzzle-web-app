@@ -1,0 +1,39 @@
+<div class="login-page">
+    <mat-card class="mat-elevation-z12">
+        <mat-card-title style="text-align:center;">Sign In</mat-card-title>
+        <mat-tab-group mat-stretch-tabs class="example-stretched-tabs">
+            <mat-tab label="Use this for log into admin panel">
+                <mat-card-content>
+                    <form action="">
+                        <mat-form-field>
+                            <input matInput placeholder="Email" required name="email" ngModel #email="ngModel" [(ngModel)]="emailId">
+                            <mat-error *ngIf="email.invalid">Email is required</mat-error>
+                            <mat-icon matSuffix>email</mat-icon>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Password" type="password" required minlength="6" name="password" ngModel #password="ngModel" [(ngModel)]="passwordId">
+                            <mat-error *ngIf="password.errors && password.errors.required">
+                                Password is required
+                            </mat-error>
+                            <mat-error *ngIf="password.errors && password.errors.minlength">
+                                Password must be of length 6
+                            </mat-error>
+                            <mat-icon matSuffix>lock</mat-icon>
+                        </mat-form-field>
+                        <mat-checkbox>Remember Me!</mat-checkbox>
+                        <button mat-raised-button color="primary" [disabled]="loading" class="login-button" (click)="submitLogin()">
+                            Sign In
+                        </button>
+
+                        <button mat-raised-button class="login-button" routerLink="/">
+                            <mat-icon aria-hidden="false">arrow_back</mat-icon>
+                            Back to dashboard
+                            <mat-icon aria-hidden="false">yard</mat-icon>
+                        </button>
+                    </form>
+                </mat-card-content>
+            </mat-tab>
+
+        </mat-tab-group>
+    </mat-card>
+</div>
