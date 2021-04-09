@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SignInData } from '../model/signInData';
+import { AdminService } from '../services/admin.service';
 
 @Component({
   selector: 'app-login',
@@ -17,13 +18,24 @@ export class LoginComponent implements OnInit {
   public signInData!: SignInData;
 
   constructor(private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router , private adminService : AdminService) { }
 
   ngOnInit(): void {
   }
 
   public submitLogin(): void {
-    this.router.navigate(['/admin']);
+
+    this.signInData = new SignInData(this.emailId,this.passwordId);
+    this.adminService.login(this.signInData).subscribe(
+      rsp =>{
+        console.log("worked");
+        this.router.navigate(['/admin']);
+      },
+      error =>{
+        console.log("not worked");
+      }  
+    );
+    
   }
 
 }
