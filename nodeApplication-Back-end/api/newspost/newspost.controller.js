@@ -1,17 +1,21 @@
+const fs = require('fs');
 const {
     create,
     allPosts,
     testPost,
-    updatePost
+    updatePost,
+    getCategory,
+    getPostCategoryId,
 } = require("./newspost.service");
-const { hashSync, genSaltSync, compareSync } = require("bcrypt");
-const { sign } = require("jsonwebtoken");
+
 
 module.exports = {
 
     createNewPost: (req, res) => {
-        const body = req.body;
-        create(body, (err, results) => {
+        const img = req.files.postImg[0];
+        const body = JSON.parse(req.body.newpost);
+        console.log(body);
+        create(img, body, (err, results) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({
@@ -56,7 +60,8 @@ module.exports = {
         });
     },
     getTestPost: (req, res) => {
-        testPost((err, results) => {
+        const file = fs.readFileSync(req.file.path);
+        testPost(file, (err, results) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({
@@ -66,6 +71,34 @@ module.exports = {
             }
             return res.status(200).json({
                 success: 1,
+                data: results
+            });
+        });
+    },
+    getAllCategory: (req, res) => {
+        getCategory((err, results) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    success: 0,
+                    message: "Database connection errror"
+                });
+            }
+            return res.status(200).json({
+                data: results
+            });
+        });
+    },
+    getPostByCategoryId: (req, res) => {
+        getPostCategoryId((err, results) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    success: 0,
+                    message: "Database connection errror"
+                });
+            }
+            return res.status(200).json({
                 data: results
             });
         });

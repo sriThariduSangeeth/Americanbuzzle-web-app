@@ -1,24 +1,28 @@
 <div fxFlex fxLayout="row" fxLayoutAlign="end center">
-
-    <button mat-icon-button routerLink="/main" class="nav-item" color="accent">
-            <mat-icon>dashboard</mat-icon>
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-
-    <button mat-mini-fab color="accent">
-            <mat-icon>smart_button</mat-icon>
-        </button>
+    <ul fxLayout="row" fxLayoutGap="20px">
+        <li>
+            <button mat-icon-button routerLink="/main" class="nav-item" color="accent">
+                <mat-icon>dashboard</mat-icon>
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+        </li>
+        <li>
+            <button mat-mini-fab color="accent">
+                <mat-icon>smart_button</mat-icon>
+            </button>
+        </li>
+    </ul>
 
 </div>
 <div class="grid-container">
     <div fxFlex fxLayout="row" fxLayoutAlign="center">
-        <mat-card class="dashboard-card mat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}">
+        <mat-card class="dashboard-card mat-app-background">
 
             <mat-card-header>
                 <mat-icon>shopping_cart</mat-icon>
-                <mat-card-title>{{registermode}}</mat-card-title>
+                <mat-card-title>New Post</mat-card-title>
 
-                <mat-card-subtitle>Registration</mat-card-subtitle>
+                <mat-card-subtitle>create new post</mat-card-subtitle>
                 <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
                     <div fxLayoutGap="20px">
                         <button mat-raised-button (click)="submit()" color="primary" type="submit">Submit</button>
@@ -34,11 +38,11 @@
                         <p>
                             <mat-form-field class="form-field" appearance="standard">
                                 <mat-label>Post Title</mat-label>
-                                <input matInput placeholder="Title" [(ngModel)]="dname">
-                                <button mat-button *ngIf="dname" matSuffix mat-icon-button aria-label="Clear" (click)="dname=''">
+                                <input matInput placeholder="Title" [(ngModel)]="ptitle">
+                                <button mat-button *ngIf="ptitle" matSuffix mat-icon-button aria-label="Clear" (click)="ptitle=''">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                                <mat-icon matSuffix *ngIf="!dname">portrait</mat-icon>
+                                <mat-icon matSuffix *ngIf="!ptitle">portrait</mat-icon>
                                 <mat-hint>Devide Gutter</mat-hint>
                             </mat-form-field>
                         </p>
@@ -46,20 +50,20 @@
                             <mat-form-field class="form-field" appearance="standard">
                                 <mat-label>Original post link</mat-label>
                                 <span matPrefix>https://www. &nbsp;</span>
-                                <input matInput placeholder="NIC Number" [(ngModel)]="dnic">
-                                <button mat-button *ngIf="dnic" matSuffix mat-icon-button aria-label="Clear" (click)="dnic=''">
+                                <input matInput placeholder="NIC Number" [(ngModel)]="plink">
+                                <button mat-button *ngIf="plink" matSuffix mat-icon-button aria-label="Clear" (click)="plink=''">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                                <mat-icon matSuffix *ngIf="!dnic">share</mat-icon>
+                                <mat-icon matSuffix *ngIf="!plink">share</mat-icon>
                                 <mat-hint>https://www.exmple.com</mat-hint>
                             </mat-form-field>
                         </p>
                         <p>
                             <mat-form-field class="form-field" appearance="fill">
                                 <mat-label>Select</mat-label>
-                                <mat-select>
-                                    <mat-option value="one">First option</mat-option>
-                                    <mat-option value="two">Second option</mat-option>
+                                <mat-select [(ngModel)]="pcategory" name="cat">
+                                    <mat-option *ngFor="let cat of categorys" [value]="cat.id">
+                                        {{cat.categoryname}}</mat-option>
                                 </mat-select>
                                 <mat-hint>Select post category</mat-hint>
                             </mat-form-field>
@@ -67,21 +71,19 @@
                         <p>
                             <mat-form-field class="form-field" appearance="outline">
                                 <mat-label>Post Description</mat-label>
-                                <input matInput placeholder="Description..." [(ngModel)]="daddress">
-                                <button mat-button *ngIf="daddress" matSuffix mat-icon-button aria-label="Clear" (click)="daddress=''">
+                                <input matInput placeholder="Description..." [(ngModel)]="pdiscriptions">
+                                <button mat-button *ngIf="pdiscriptions" matSuffix mat-icon-button aria-label="Clear" (click)="pdiscriptions=''">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                                <mat-icon matSuffix *ngIf="!daddress">keyboard</mat-icon>
+                                <mat-icon matSuffix *ngIf="!pdiscriptions">keyboard</mat-icon>
                             </mat-form-field>
                         </p>
                         <p>
-                            <mat-form-field class="form-field" appearance="outline">
+                            <mat-form-field class="form-field" color="primary" appearance="fill">
                                 <mat-label>Post Create Date</mat-label>
-                                <input matInput placeholder="Email" [(ngModel)]="demail">
-                                <button mat-button *ngIf="demail" matSuffix mat-icon-button aria-label="Clear" (click)="demail=''">
-                                    <mat-icon>close</mat-icon>
-                                </button>
-                                <mat-icon matSuffix *ngIf="!demail">event_available</mat-icon>
+                                <input matInput [matDatepicker]="psd" [(ngModel)]="pstartdate">
+                                <mat-datepicker-toggle matSuffix [for]="psd"></mat-datepicker-toggle>
+                                <mat-datepicker #psd color="primary"></mat-datepicker>
                                 <mat-hint>YYYY-MM-DD (Today)</mat-hint>
                             </mat-form-field>
                         </p>
@@ -89,11 +91,9 @@
                         <p>
                             <mat-form-field class="form-field" appearance="outline">
                                 <mat-label>Post Expire Date</mat-label>
-                                <input matInput placeholder="Blood Group" [(ngModel)]="dblood">
-                                <button mat-button *ngIf="dblood" matSuffix mat-icon-button aria-label="Clear" (click)="dblood=''">
-                                    <mat-icon>close</mat-icon>
-                                </button>
-                                <mat-icon matSuffix *ngIf="!dblood">event_busy</mat-icon>
+                                <input matInput [matDatepicker]="ped" [(ngModel)]="penddate">
+                                <mat-datepicker-toggle matSuffix [for]="ped"></mat-datepicker-toggle>
+                                <mat-datepicker #ped color="primary"></mat-datepicker>
                                 <mat-hint>YYYY-MM-DD</mat-hint>
                             </mat-form-field>
                         </p>

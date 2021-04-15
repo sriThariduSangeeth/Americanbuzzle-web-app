@@ -2,8 +2,15 @@ import { ElementRef, ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Category } from '../model/category';
+import { Post } from '../model/post';
 import { FileUploadService } from '../services/file-upload.service';
+import * as moment from 'moment';
 
+interface Food {
+  value: string;
+  viewValue: string;
+}
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -11,60 +18,59 @@ import { FileUploadService } from '../services/file-upload.service';
 })
 export class AdminComponent implements OnInit {
 
-  registermode: string = "Add New Post";
-  typeOne: string | any;
-  isDarkTheme:boolean = true;
+  @ViewChild("fileUpload", { static: false })
+  fileUpload!: ElementRef;
 
-  // selectedFile!: File;
-  retrievedImage: any;
-  // base64Data: any;
-  // retrieveResonse: any;
   num: number = 1;
   message: string | any;
   imageName: any;
   fileName!: string;
   file!: File;
   files: File[] = [];
-  url: string | any = "../../../assets/upload.svg";
+  url: string | any = "../../assets/upload.svg";
 
-  dname = '';
-  daddress = '';
-  dgender = '';
-  dlicense = '';
-  dnic = '';
-  dtelnumber = '';
-  demail = '';
-  dblood = '';
-  dpassword = '';
-  drepassword = '';
+  ptitle = '';
+  plink = '';
+  pcategory!: number;
+  pdiscriptions = '';
+  pstartdate!: string;
+  penddate!: string;
+
   dimage!: FormData;
 
+  categorys: Category[] = [];
 
   loginForm!: FormGroup;
   emailRegx = /^(([^<>+()\[\]\\.,;:\s@"-#$%&=]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$/;
 
-  constructor(private fileUploadService: FileUploadService, private router: ActivatedRoute, private formBuilder: FormBuilder) {}
-  ngOnInit(): void {}
+  constructor(private fileUploadService: FileUploadService, private router: ActivatedRoute, private formBuilder: FormBuilder) { }
+  ngOnInit(): void {
+    this.getcategory();
+  }
 
-  changeVal() {
 
-    let type: string = this.router.snapshot.params.type;
+  getcategory() {
+    this.fileUploadService.getCategory().subscribe(
+      rsp => {
+        this.categorys = rsp.data;
+      },
+      err => {
 
-    if (type == 'vehicle') {
-      this.registermode = "Vehicle Register Page";
-      console.log(this.registermode);
-    } else {
-      this.registermode = "Driver Register Page";
-      console.log(this.registermode);
-    }
+      }
+    );
   }
 
   submit() {
+    const mStartDate = new Date(this.pstartdate);
+    const mEndDate = new Date(this.penddate);
+    const start = moment(mStartDate).format("YYYY/MM/DD");
+    const end = moment(mEndDate).format("YYYY/MM/DD");
+
     if (this.file != null) {
       const formData = new FormData();
-      formData.append('profileImg', this.file , this.file.name);
-      // let driver = new Driver(this.dname,this.dnic,this.demail,this.daddress,this.dblood,this.dgender,this.dlicense,this.dpassword);
-      formData.append('driver', JSON.stringify(""));
+      formData.append('postImg', this.file, this.file.name);
+      let post = new Post(this.ptitle, this.pdiscriptions, this.pcategory, start, end, this.file.name, this.plink);
+      formData.append('newpost', JSON.stringify(post));
       this.fileUploadService.upload(formData).subscribe(
         rsp => {
           console.log(rsp.type)
@@ -76,8 +82,6 @@ export class AdminComponent implements OnInit {
     }
   };
 
-  @ViewChild("fileUpload", { static: false })
-  fileUpload!: ElementRef;
 
   //Gets called when the user selects an image
   public onFileChanged(event: any) {
@@ -91,17 +95,6 @@ export class AdminComponent implements OnInit {
       reader.readAsDataURL(this.file);
     }
 
-  }
-
-  //Gets called when the user clicks on submit to upload the image
-  onUpload() {
-    console.log(this.files)
-    this.fileUpload.nativeElement.value = '';
-    this.uploadFile(this.file);
-  }
-
-  uploadFile(file: File) {
-    throw new Error('Method not implemented.');
   }
 
 }
