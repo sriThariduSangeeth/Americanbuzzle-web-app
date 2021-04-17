@@ -62,7 +62,7 @@
                             <mat-form-field class="form-field" appearance="fill">
                                 <mat-label>Select</mat-label>
                                 <mat-select [(ngModel)]="pcategory" name="cat">
-                                    <mat-option *ngFor="let cat of categorys" [value]="cat.id">
+                                    <mat-option *ngFor="let cat of categorys" [value]="cat">
                                         {{cat.categoryname}}</mat-option>
                                 </mat-select>
                                 <mat-hint>Select post category</mat-hint>

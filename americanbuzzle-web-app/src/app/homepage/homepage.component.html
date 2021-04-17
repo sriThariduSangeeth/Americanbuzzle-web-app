@@ -10,9 +10,9 @@
     </div>
 
 
-    <mat-grid-list cols="2" rowHeight="350px">
-        <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-            <app-post-card></app-post-card>
+    <mat-grid-list cols="2" rowHeight="450px">
+        <mat-grid-tile *ngFor="let card of cards">
+            <app-post-card [post]="card"></app-post-card>
         </mat-grid-tile>
     </mat-grid-list>
 </div>

@@ -1,17 +1,24 @@
 <mat-card class="dashboard-card">
     <mat-card-header>
         <mat-card-title>
-            fdfgf
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+            {{post.titel}}
+            <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu" xPosition="before">
                 <button mat-menu-item>Expand</button>
                 <button mat-menu-item>Remove</button>
-            </mat-menu>
+            </mat-menu> -->
         </mat-card-title>
+        <mat-card-subtitle>{{post.category}}</mat-card-subtitle>
+        <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+            <div fxLayoutGap="20px">
+                <button mat-raised-button (click)="submit()" color="primary" type="submit">Open</button>
+            </div>
+        </div>
     </mat-card-header>
+    <img mat-card-image src="{{'http://localhost:3000/'+post.img}}" alt="Photo of a Shiba Inu">
     <mat-card-content class="dashboard-card-content">
-        <div>Card Content Here</div>
+        <div>{{post.discriptions}}</div>
     </mat-card-content>
 </mat-card>

@@ -31,7 +31,7 @@ export class AdminComponent implements OnInit {
 
   ptitle = '';
   plink = '';
-  pcategory!: number;
+  pcategory!: Category;
   pdiscriptions = '';
   pstartdate!: string;
   penddate!: string;
@@ -65,11 +65,13 @@ export class AdminComponent implements OnInit {
     const mEndDate = new Date(this.penddate);
     const start = moment(mStartDate).format("YYYY/MM/DD");
     const end = moment(mEndDate).format("YYYY/MM/DD");
+    console.log(this.pcategory);
+
 
     if (this.file != null) {
       const formData = new FormData();
       formData.append('postImg', this.file, this.file.name);
-      let post = new Post(this.ptitle, this.pdiscriptions, this.pcategory, start, end, this.file.name, this.plink);
+      let post = new Post(this.ptitle, this.pdiscriptions, this.pcategory.id, this.pcategory.categoryname, start, end, this.file.name, "", this.plink);
       formData.append('newpost', JSON.stringify(post));
       this.fileUploadService.upload(formData).subscribe(
         rsp => {

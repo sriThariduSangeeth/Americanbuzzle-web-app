@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { catchError, map, mapTo, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Category } from '../model/category';
+import { Post } from '../model/post';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,10 @@ export class FileUploadService {
   public getCategory(): Observable<{ data: Category[] }> {
     console.log("get categpry method call");
     return this.httpClient.get<{ data: Category[] }>(`${this.SERVER_URL}/news/category`);
+  }
+
+  public getAllPost(): Observable<{ data: Post[] }> {
+    console.log("get All post");
+    return this.httpClient.get<{ data: Post[] }>(`${this.SERVER_URL}/news/all`);
   }
 }

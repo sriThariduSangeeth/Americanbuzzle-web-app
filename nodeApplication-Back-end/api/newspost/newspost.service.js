@@ -3,8 +3,8 @@ const pool = require("../../config/dbconfig");
 module.exports = {
     create: (img, data, callBack) => {
         pool.query(
-            `insert into postobj(titel, discriptions, startdate, enddate,img, imgname, posturl) 
-                      values(?,?,?,?,?,?,?)`, [
+            `insert into postobj(titel, discriptions, startdate, enddate,img, imgname, posturl,catid,category) 
+                      values(?,?,?,?,?,?,?,?,?)`, [
                 data.titel,
                 data.discriptions,
                 data.startdate,
@@ -12,6 +12,8 @@ module.exports = {
                 img.path,
                 img.filename,
                 data.posturl,
+                data.catid,
+                data.category,
             ],
             (error, results, fields) => {
                 if (error) {

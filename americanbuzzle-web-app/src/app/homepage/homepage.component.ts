@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { SlidesOutputData, OwlOptions } from 'ngx-owl-carousel-o';
+import { FileUploadService } from '../services/file-upload.service';
+import { Post } from '../model/post';
 
 @Component({
   selector: 'app-homepage',
@@ -9,39 +11,37 @@ import { SlidesOutputData, OwlOptions } from 'ngx-owl-carousel-o';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent {
-  /** Based on the screen size, switch from standard to one column per row */
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'Card 1', cols: 1, rows: 1 },
-          { title: 'Card 2', cols: 1, rows: 1 },
-          { title: 'Card 3', cols: 1, rows: 1 },
-          { title: 'Card 4', cols: 1, rows: 1 }
-        ];
-      }
 
-      return [
-        { title: 'Card 1', cols: 2, rows: 1 },
-        { title: 'Card 2', cols: 2, rows: 1 },
-        { title: 'Card 3', cols: 1, rows: 1 },
-        { title: 'Card 4', cols: 1, rows: 1 }
-      ];
-    })
-  );
+  cards: Post[] = [];
+  post!: Post;
 
-  slidesStore: { id: string, src: string , alt:string , title:string}[] = [];
-  
+  constructor(private breakpointObserver: BreakpointObserver, private fileUploadService: FileUploadService) {
+    console.log("this is priont");
+
+    this.getPostDetails();
+    this.slidesStore = [
+      { "id": "0", "src": "../assets/t2.jpg", "alt": "test", "title": "test" },
+      { "id": "1", "src": "../assets/t3.jpg", "alt": "test", "title": "test" },
+      { "id": "2", "src": "../assets/t4.jpg", "alt": "test", "title": "test" },
+      { "id": "3", "src": "../assets/t5.jpg", "alt": "test", "title": "test" }];
+  }
+
+  slidesStore: { id: string, src: string, alt: string, title: string }[] = [];
+
   activeSlides: SlidesOutputData = new SlidesOutputData;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-    console.log("this is priont");
-    
-    this.slidesStore = [
-      { "id": "0", "src": "../assets/t2.jpg", "alt":"test" , "title":"test" },
-      { "id": "1", "src": "../assets/t3.jpg" , "alt":"test" , "title":"test"},
-      { "id": "2", "src": "../assets/t4.jpg" , "alt":"test" , "title":"test"},
-      { "id": "3", "src": "../assets/t5.jpg" , "alt":"test" , "title":"test"}];
+  getPostDetails() {
+    this.fileUploadService.getAllPost().subscribe(
+      rsp => {
+        console.log("call get post");
+        console.log(rsp.data);
+
+        this.cards = rsp.data;
+      },
+      err => {
+
+      }
+    );
   }
 
   getPassedData(data: SlidesOutputData) {
@@ -80,6 +80,6 @@ export class HomepageComponent {
         nav: false
       }
     },
-    nav:false,
+    nav: false,
   }
 }
