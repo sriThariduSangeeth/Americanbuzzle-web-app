@@ -9,10 +9,25 @@
         </owl-carousel-o>
     </div>
 
+    <div>
+        <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+            <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Category :</mat-label>
+                <mat-select [(value)]="pcategory">
+                    <mat-option></mat-option>
+                    <mat-option [value]="cat.categoryname" *ngFor="let cat of categorys">{{ cat.categoryname }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
 
-    <mat-grid-list cols="2" rowHeight="450px">
-        <mat-grid-tile *ngFor="let card of cards">
-            <app-post-card [post]="card"></app-post-card>
-        </mat-grid-tile>
-    </mat-grid-list>
+    <div>
+        <mat-grid-list cols="2" rowHeight="1:1">
+            <mat-grid-tile *ngFor="let card of cards | categoryFilter :pcategory: 'category' ">
+                <app-post-card [post]="card"></app-post-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+
 </div>

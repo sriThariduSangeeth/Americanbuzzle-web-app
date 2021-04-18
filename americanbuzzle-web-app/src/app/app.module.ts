@@ -37,6 +37,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PostCardComponent } from './shared/cards/post-card/post-card.component';
+import { CategoryFilterPipe } from './pipes/category-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { PostCardComponent } from './shared/cards/post-card/post-card.component'
     LoginComponent,
     AdminComponent,
     PostCardComponent,
+    CategoryFilterPipe,
   ],
   imports: [
     BrowserModule,

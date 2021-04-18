@@ -3,6 +3,7 @@
 }
 
 .dashboard-card {
+    background-color: #cccbcb8f;
     position: absolute;
     top: 15px;
     left: 15px;
@@ -10,13 +11,20 @@
     bottom: 15px;
 }
 
+img {
+    height: calc(100% - 135px);
+}
+
 
 /* .more-button {
     position: absolute;
     top: 5px;
     right: 10px;
-}
+} */
 
 .dashboard-card-content {
     text-align: center;
-} */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

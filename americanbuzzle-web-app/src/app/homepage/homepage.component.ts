@@ -4,6 +4,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { SlidesOutputData, OwlOptions } from 'ngx-owl-carousel-o';
 import { FileUploadService } from '../services/file-upload.service';
 import { Post } from '../model/post';
+import { Category } from '../model/category';
 
 @Component({
   selector: 'app-homepage',
@@ -14,10 +15,12 @@ export class HomepageComponent {
 
   cards: Post[] = [];
   post!: Post;
+  categorys: Category[] = [{ id: 0, categoryname: "All" }];
+  pcategory = this.categorys[0].categoryname;
 
   constructor(private breakpointObserver: BreakpointObserver, private fileUploadService: FileUploadService) {
     console.log("this is priont");
-
+    this.getcategory();
     this.getPostDetails();
     this.slidesStore = [
       { "id": "0", "src": "../assets/t2.jpg", "alt": "test", "title": "test" },
@@ -33,10 +36,19 @@ export class HomepageComponent {
   getPostDetails() {
     this.fileUploadService.getAllPost().subscribe(
       rsp => {
-        console.log("call get post");
-        console.log(rsp.data);
-
         this.cards = rsp.data;
+      },
+      err => {
+
+      }
+    );
+  }
+
+  getcategory() {
+    this.fileUploadService.getCategory().subscribe(
+      rsp => {
+        rsp.data.push({ id: 0, categoryname: "All" });
+        this.categorys = rsp.data;
       },
       err => {
 
