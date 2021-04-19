@@ -18,7 +18,7 @@ export class PostCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submit() {
-
+  open() {
+    window.open(this.post.posturl, "_blank");
   }
 }
