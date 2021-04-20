@@ -6,11 +6,11 @@ const newspostRouter = require("./api/newspost/newspost.router");
 
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
-// app.use(express.urlencoded({ extended: true }))
-app.use(function(req, res, next) {
+app.use(express.urlencoded({ extended: true }))
+app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', process.env.FRONT_END);
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin,X-Requested-With,content-type,Accept,x-client-key,x-client-token,x-client-secret,Authorization');
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
-
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, filter, take, switchMap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -11,26 +10,27 @@ import { AdminService } from '../services/admin.service';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  urlsToNotUse: Array<string> = [];
 
-  constructor(public authService: AdminService, public router: Router, public activeRoute: ActivatedRoute, private authser: AuthService) { }
+  constructor(public authService: AdminService,
+    public router: Router, public activeRoute: ActivatedRoute, private authser: AdminService) {
+    this.urlsToNotUse = [
+      'news/category',
+      'news/all',
+      'users/login'
+    ];
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (this.authService.getJwtToken()) {
-      request = this.addToken(request, this.authService.getJwtToken());
+    if (this.isValidRequestForInterceptor(request.url)) {
+      if (this.authService.getJwtToken()) {
+        request = this.addToken(request, this.authService.getJwtToken());
+      }
+      return next.handle(request).pipe(catchError(x => this.handleAuthError(x)));
     }
+    return next.handle(request);
 
-    // return next.handle(request).pipe(catchError(error => {
-    //   if (error instanceof HttpErrorResponse && error.status === 401 || error instanceof HttpErrorResponse && error.status === 401) {
-    //     return this.handle401Error(request, next);
-    //   }else{
-    //     return throwError(error);
-    //   }
-    // }));
-    // catch the error, make specific functions for catching specific errors and you can chain through them with more catch operators
-    return next.handle(request).pipe(catchError(x => this.handleAuthError(x)));
   }
 
   private addToken(request: HttpRequest<any>, token: string) {
@@ -55,28 +55,17 @@ export class TokenInterceptor implements HttpInterceptor {
     return throwError(err);
   }
 
-  // private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
-
-  //   this.router.navigate(['login'], { relativeTo: this.activeRoute });
-
-  //   if (!this.isRefreshing) {
-  //     this.isRefreshing = true;
-  //     this.refreshTokenSubject.next(null);
-
-  //     return this.authService.refreshToken().pipe(
-  //       switchMap((token: any) => {
-  //         this.isRefreshing = false;
-  //         this.refreshTokenSubject.next(token.jwt);
-  //         return next.handle(this.addToken(request, token.jwt));
-  //       }));
-
-  //   } else {
-  //     return this.refreshTokenSubject.pipe(
-  //       filter(token => token != null),
-  //       take(1),
-  //       switchMap(jwt => {
-  //         return next.handle(this.addToken(request, jwt));
-  //       }));
-  //   }
-  // }
+  private isValidRequestForInterceptor(requestUrl: string): boolean {
+    let positionIndicator: string = 'api/';
+    let position = requestUrl.indexOf(positionIndicator);
+    if (position > 0) {
+      let destination: string = requestUrl.substr(position + positionIndicator.length);
+      for (let address of this.urlsToNotUse) {
+        if (new RegExp(address).test(destination)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 }

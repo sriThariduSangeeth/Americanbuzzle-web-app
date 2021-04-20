@@ -12,30 +12,40 @@ export class LoginComponent implements OnInit {
 
   emailId: string = '';
   passwordId: string = '';
-  error:string = '';
+  error: string = '';
   returnUrl: string = '';
   loading: boolean = false;
   public signInData!: SignInData;
 
   constructor(private route: ActivatedRoute,
-    private router: Router , private adminService : AdminService) { }
+    private router: Router, private adminService: AdminService) {
+    if (this.adminService.isLoggedIn()) {
+      this.router.navigate(['/admin']);
+    }
+  }
 
   ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/admin';
   }
 
   public submitLogin(): void {
 
-    this.signInData = new SignInData(this.emailId,this.passwordId);
+    this.signInData = new SignInData(this.emailId, this.passwordId);
+    this.loading = true;
     this.adminService.login(this.signInData).subscribe(
-      rsp =>{
+      success => {
         console.log("worked");
-        this.router.navigate(['/admin']);
+        this.router.navigate([this.returnUrl]);
+        this.loading = false;
+        // this.router.navigate(['/admin']);
       },
-      error =>{
+      error => {
         console.log("not worked");
-      }  
+        this.error = error;
+        this.loading = false;
+      }
     );
-    
+
   }
 
 }

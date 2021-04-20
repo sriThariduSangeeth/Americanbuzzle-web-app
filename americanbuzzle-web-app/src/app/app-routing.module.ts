@@ -19,12 +19,11 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomepageComponent },
-      { path: 'category', component: CategorypageComponent },
       { path: 'latest', component: LatestpageComponent },
       { path: 'search', component: SearchpageComponent },
     ]
   },
-  { path: 'admin', component: AdminComponent , canActivate: [AuthGuard]},
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { HomepageComponent } from './homepage/homepage.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
@@ -30,7 +31,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminComponent } from './admin/admin.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSelectModule } from '@angular/material/select';
@@ -38,6 +39,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PostCardComponent } from './shared/cards/post-card/post-card.component';
 import { CategoryFilterPipe } from './pipes/category-filter.pipe';
+import { AdminService } from './services/admin.service';
+import { TokenInterceptor } from './interceptor/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -78,13 +81,22 @@ import { CategoryFilterPipe } from './pipes/category-filter.pipe';
     CarouselModule,
     FlexLayoutModule,
     MatSelectModule,
+    MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule
   ],
   exports: [
     MatSlideToggleModule
   ],
-  providers: [AuthGuard],
+  providers: [
+    AuthGuard,
+    AdminService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

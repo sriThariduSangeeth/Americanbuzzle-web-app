@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { SlidesOutputData, OwlOptions } from 'ngx-owl-carousel-o';
 import { FileUploadService } from '../services/file-upload.service';
 import { Post } from '../model/post';
@@ -18,7 +18,7 @@ export class HomepageComponent {
   categorys: Category[] = [{ id: 0, categoryname: "All" }];
   pcategory = this.categorys[0].categoryname;
 
-  constructor(private breakpointObserver: BreakpointObserver, private fileUploadService: FileUploadService) {
+  constructor(private breakpointObserver: BreakpointObserver, private fileUploadService: FileUploadService, private snackBar: MatSnackBar) {
     console.log("this is priont");
     this.getcategory();
     this.getPostDetails();
@@ -37,13 +37,25 @@ export class HomepageComponent {
     this.fileUploadService.getAllPost().subscribe(
       rsp => {
         this.cards = rsp.data;
+        this.snackBar.open("Post are Avialable", "Worked", {
+          duration: 2000,
+        });
       },
       err => {
-
+        this.snackBar.open("Post are Not Avialable", "Sorry !", {
+          duration: 2000,
+        });
       }
     );
   }
 
+  openSnackBar() {
+
+    this.snackBar.open("this mess", "ffdsffs", {
+      duration: 2000,
+    });
+
+  }
   getcategory() {
     this.fileUploadService.getCategory().subscribe(
       rsp => {

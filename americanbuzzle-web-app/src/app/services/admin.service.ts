@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { SignInData } from '../model/signInData';
 import { catchError, mapTo, tap } from 'rxjs/operators';
@@ -19,14 +19,17 @@ export class AdminService {
 
 
   public login(logindata: SignInData) {
-    return this.httpClient.post<any>(`${environment.apiUrl}/users/login`, logindata).pipe(
+    return this.httpClient.post<any>(`${environment.apiUrl}/users/login/`, logindata).pipe(
       tap((tokens: Tokens) => {
+        console.log(tokens);
         this.doLoginUser(tokens);
       }),
       mapTo(true),
       catchError(
-        error => {
-          alert(error.error);
+        (error: HttpErrorResponse) => {
+          console.log(error);
+
+          alert(error.error.data);
           return of(false);
         }
       )
@@ -42,14 +45,32 @@ export class AdminService {
     return localStorage.getItem(this.JWT_TOKEN);
   }
 
+  isLoggedIn(): boolean {
+    if (this.getJwtToken()) {
+      return true;
+    }
+    return false;
+  }
+
   private storeTokens(tokens: Tokens) {
-    localStorage.setItem(this.JWT_TOKEN, tokens.jwtToken);
-    localStorage.setItem(this.USER_NAME, tokens.userName);
+    localStorage.setItem(this.JWT_TOKEN, tokens.token);
+    localStorage.setItem(this.USER_NAME, tokens.user);
     localStorage.setItem(this.USER_MAIL, tokens.userEmail);
   }
 
   public createUser() {
 
+  }
+
+  public doLogoutUser() {
+    // this.loggedUser = null;
+    this.removeTokens();
+  }
+
+  private removeTokens() {
+    localStorage.removeItem(this.JWT_TOKEN);
+    localStorage.removeItem(this.USER_NAME);
+    localStorage.removeItem(this.USER_MAIL);
   }
 
 }

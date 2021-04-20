@@ -14,7 +14,7 @@ var storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "uploads/");
     },
-    filename: function(req, file, cb) {
+    filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + file.originalname.replace(/\s/g, ''));
     }
 });
@@ -34,7 +34,7 @@ const {
     getPostByCategoryId,
 } = require("./newspost.controller");
 
-router.post("/post", upload.fields([{ name: 'postImg', maxCount: 1 }, { name: 'newpost', maxCount: 1 }]), createNewPost);
+router.post("/post", upload.fields([{ name: 'postImg', maxCount: 1 }, { name: 'newpost', maxCount: 1 }]), checkToken, createNewPost);
 router.get("/all", getAllPost);
 router.get("/category", getAllCategory)
 router.get("/category/:id", getPostByCategoryId);
