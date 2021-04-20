@@ -1,11 +1,12 @@
 import { ElementRef, ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Category } from '../model/category';
 import { Post } from '../model/post';
 import { FileUploadService } from '../services/file-upload.service';
 import * as moment from 'moment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Food {
   value: string;
@@ -43,7 +44,7 @@ export class AdminComponent implements OnInit {
   loginForm!: FormGroup;
   emailRegx = /^(([^<>+()\[\]\\.,;:\s@"-#$%&=]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$/;
 
-  constructor(private fileUploadService: FileUploadService, private router: ActivatedRoute, private formBuilder: FormBuilder) { }
+  constructor(private fileUploadService: FileUploadService, private router: Router, private formBuilder: FormBuilder, private snackBar: MatSnackBar) { }
   ngOnInit(): void {
     this.getcategory();
   }
@@ -75,11 +76,17 @@ export class AdminComponent implements OnInit {
       formData.append('newpost', JSON.stringify(post));
       this.fileUploadService.upload(formData).subscribe(
         rsp => {
-          console.log(rsp.type)
-          this.message = 'Image uploaded successfully';
+          if (rsp) {
+            this.message = 'Image uploaded successfully';
+            this.snackBar.open("Upload Post", "successfully", {
+              duration: 2000,
+            });
+            this.router.navigate(['/admin']);
+          }
         },
         error => {
-          console.log(error)
+          alert(error.error.data);
+          this.router.navigate(['/admin']);
         });
     }
   };

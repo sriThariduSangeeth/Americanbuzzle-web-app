@@ -49,13 +49,6 @@ export class HomepageComponent {
     );
   }
 
-  openSnackBar() {
-
-    this.snackBar.open("this mess", "ffdsffs", {
-      duration: 2000,
-    });
-
-  }
   getcategory() {
     this.fileUploadService.getCategory().subscribe(
       rsp => {

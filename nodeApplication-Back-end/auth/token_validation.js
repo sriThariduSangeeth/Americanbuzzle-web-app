@@ -8,7 +8,7 @@ module.exports = {
             token = token.slice(7);
             jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
                 if (err) {
-                    return res.status(404).json({
+                    return res.status(401).json({
                         success: 0,
                         message: "Invalid Token..."
                     });

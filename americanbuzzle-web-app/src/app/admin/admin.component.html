@@ -38,7 +38,7 @@
                         <p>
                             <mat-form-field class="form-field" appearance="standard">
                                 <mat-label>Post Title</mat-label>
-                                <input matInput placeholder="Title" [(ngModel)]="ptitle">
+                                <input matInput required placeholder="Title" [(ngModel)]="ptitle">
                                 <button mat-button *ngIf="ptitle" matSuffix mat-icon-button aria-label="Clear" (click)="ptitle=''">
                                     <mat-icon>close</mat-icon>
                                 </button>
@@ -49,8 +49,8 @@
                         <p>
                             <mat-form-field class="form-field" appearance="standard">
                                 <mat-label>Original post link</mat-label>
-                                <span matPrefix>https://www. &nbsp;</span>
-                                <input matInput placeholder="NIC Number" [(ngModel)]="plink">
+                                <!-- <span matPrefix>https://www. &nbsp;</span> -->
+                                <input matInput required placeholder="https://www." [(ngModel)]="plink">
                                 <button mat-button *ngIf="plink" matSuffix mat-icon-button aria-label="Clear" (click)="plink=''">
                                     <mat-icon>close</mat-icon>
                                 </button>
@@ -61,7 +61,7 @@
                         <p>
                             <mat-form-field class="form-field" appearance="fill">
                                 <mat-label>Select</mat-label>
-                                <mat-select [(ngModel)]="pcategory" name="cat">
+                                <mat-select required [(ngModel)]="pcategory" name="cat">
                                     <mat-option *ngFor="let cat of categorys" [value]="cat">
                                         {{cat.categoryname}}</mat-option>
                                 </mat-select>
@@ -71,7 +71,7 @@
                         <p>
                             <mat-form-field class="form-field" appearance="outline">
                                 <mat-label>Post Description</mat-label>
-                                <input matInput placeholder="Description..." [(ngModel)]="pdiscriptions">
+                                <input matInput required placeholder="Description..." [(ngModel)]="pdiscriptions">
                                 <button mat-button *ngIf="pdiscriptions" matSuffix mat-icon-button aria-label="Clear" (click)="pdiscriptions=''">
                                     <mat-icon>close</mat-icon>
                                 </button>
@@ -81,7 +81,7 @@
                         <p>
                             <mat-form-field class="form-field" color="primary" appearance="fill">
                                 <mat-label>Post Create Date</mat-label>
-                                <input matInput [matDatepicker]="psd" [(ngModel)]="pstartdate">
+                                <input matInput required [matDatepicker]="psd" [(ngModel)]="pstartdate">
                                 <mat-datepicker-toggle matSuffix [for]="psd"></mat-datepicker-toggle>
                                 <mat-datepicker #psd color="primary"></mat-datepicker>
                                 <mat-hint>YYYY-MM-DD (Today)</mat-hint>
@@ -111,7 +111,7 @@
                             </div>
                             <div class="container row">
                                 <div class="col-md-6">
-                                    <input type="file" #fileUpload (change)="onFileChanged($event)" accept="image/*" id="fileUpload" name="fileUpload" multiple="multiple">
+                                    <input type="file" required #fileUpload (change)="onFileChanged($event)" accept="image/*" id="fileUpload" name="fileUpload" multiple="multiple">
 
                                 </div>
                             </div>

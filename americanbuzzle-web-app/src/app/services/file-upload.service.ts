@@ -14,13 +14,8 @@ export class FileUploadService {
   constructor(private httpClient: HttpClient) { }
   SERVER_URL: string = environment.apiUrl;
 
-  public upload(formData: FormData) {
-    console.log("upload service function is called")
-    console.log(formData)
-    return this.httpClient.post<FormData>(`${this.SERVER_URL}/news/post`, formData, {
-      reportProgress: true,
-      observe: 'events'
-    });
+  public upload(formData: FormData): Observable<FormData> {
+    return this.httpClient.post<FormData>(`${this.SERVER_URL}/news/post`, formData);
   }
 
   public getCategory(): Observable<{ data: Category[] }> {

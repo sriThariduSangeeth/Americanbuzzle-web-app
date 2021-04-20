@@ -34,15 +34,14 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.adminService.login(this.signInData).subscribe(
       success => {
-        console.log("worked");
         this.router.navigate([this.returnUrl]);
         this.loading = false;
         // this.router.navigate(['/admin']);
       },
       error => {
-        console.log("not worked");
         this.error = error;
         this.loading = false;
+        this.adminService.doLogoutUser();
       }
     );
 

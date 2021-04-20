@@ -46,11 +46,11 @@ export class TokenInterceptor implements HttpInterceptor {
     if (err.status === 401 || err.status === 403) {
       //navigate /delete cookies or whatever
       this.authser.doLogoutUser();
-      this.router.navigateByUrl(`/`);
+      this.router.navigateByUrl(`/login`);
       // if you've caught / handled the error, you don't want to rethrow it unless you also want downstream consumers to have to handle it as well.
       return of(err.message); // or EMPTY may be appropriate here
     } else if (err.status === 0) {
-      console.log(err.message);
+      alert("Connection Refused");
     }
     return throwError(err);
   }
