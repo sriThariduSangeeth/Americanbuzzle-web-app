@@ -1,4 +1,4 @@
-<h3 align="center">:rotating_light: :construction:&ensp;&ensp;Work In Progress&ensp;&ensp;:construction: :rotating_light:</h3>
+<h3 align="center">:white_check_mark: :construction:&ensp;&ensp;Work Completed&ensp;&ensp;:construction: :white_check_mark:</h3>
 <h1 align="center">Americanbuzzle Web Application</h1>
 
 ```rust
@@ -21,8 +21,8 @@ Application URL : http://americanbuzzle.com/
 <h2>Content&ensp;&ensp;:book: :book:</h2>
 
 <ul>
-    <li>Angular web app</li>
-    <li>Node JS server</li>
+    <li>Angular 10 web app</li>
+    <li>Node JS Express server</li>
     <li>MySQL DB</li>
 </ul> 
 
