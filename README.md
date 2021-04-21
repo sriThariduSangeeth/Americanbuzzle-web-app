@@ -26,10 +26,12 @@ Application URL : http://americanbuzzle.com/
     <li>MySQL DB</li>
 </ul> 
 
-<a>
-   <img src="https://img.shields.io/badge/Build-Passed-green" alt="Build: Passed" height="18">
+
+  [![Angular](https://img.shields.io/badge/NodeJS-14.15.4-green)](https://nodejs.org/en/)
+  <img src="https://img.shields.io/badge/Build-Passed-green" alt="Build: Passed" height="18">
   <img src="https://raw.githubusercontent.com/acervenky/animated-github-badges/master/assets/devbadge.gif" alt="Build: Passed" height="18">
-</a>
+  [![Build](https://img.shields.io/npm/v/@nestjs/core.svg)](https://angular.io/)
+
   
 <h4 align="center">Here is a screenshot of the Architecture Design</h4>
 <!-- image -->
