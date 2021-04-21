@@ -10,6 +10,7 @@
 *.class
 
 **/node_modules/
+uploads/
 
 # Log file
 *.log
