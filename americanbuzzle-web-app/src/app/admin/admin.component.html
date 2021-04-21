@@ -7,9 +7,15 @@
             </button>
         </li>
         <li>
-            <button mat-mini-fab color="accent">
-                <mat-icon>smart_button</mat-icon>
-            </button>
+            <div class="example-button-container">
+                <button mat-mini-fab [matMenuTriggerFor]="logOut">
+                    <mat-icon>smart_button</mat-icon>
+                </button>
+            </div>
+
+            <mat-menu #logOut="matMenu" class="nav-item">
+                <button mat-menu-item (click)="logout()" routerLink="/login" class="nav-item">LogOut</button>
+            </mat-menu>
         </li>
     </ul>
 

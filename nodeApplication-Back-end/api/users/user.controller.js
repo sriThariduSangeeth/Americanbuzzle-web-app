@@ -7,14 +7,19 @@ const {
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 
+const winston = require('winston');
+const winstonConfig = require('../../config/winston-config');
+let defaultLogger = winstonConfig.defaultLogger;
+
 module.exports = {
     createUser: (req, res) => {
         const body = req.body;
         const salt = genSaltSync(10);
         body.password = hashSync(body.password, salt);
+        defaultLogger.info('Create New User...');
         create(body, (err, results) => {
             if (err) {
-                console.log(err);
+                defaultLogger.error(err.body);
                 return res.status(500).json({
                     success: 0,
                     message: "Database connection errror"
@@ -28,11 +33,11 @@ module.exports = {
     },
     login: (req, res) => {
         const body = req.body;
-        console.log("call loging method");
-        console.log(body);
+        defaultLogger.info(req.body.userName + " Trying to Login.")
         getUserByUserEmail(body.userName, (err, results) => {
             if (err) {
                 console.log(err);
+                defaultLogger.error(err.body);
             }
             if (!results) {
                 return res.status(402).json({

@@ -7,6 +7,7 @@ import { Post } from '../model/post';
 import { FileUploadService } from '../services/file-upload.service';
 import * as moment from 'moment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AdminService } from '../services/admin.service';
 
 interface Food {
   value: string;
@@ -44,11 +45,17 @@ export class AdminComponent implements OnInit {
   loginForm!: FormGroup;
   emailRegx = /^(([^<>+()\[\]\\.,;:\s@"-#$%&=]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$/;
 
-  constructor(private fileUploadService: FileUploadService, private router: Router, private formBuilder: FormBuilder, private snackBar: MatSnackBar) { }
+  constructor(private fileUploadService: FileUploadService,
+    private router: Router, private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private admin: AdminService) { }
   ngOnInit(): void {
     this.getcategory();
   }
 
+  public logout() {
+    this.admin.doLogoutUser();
+  }
 
   getcategory() {
     this.fileUploadService.getCategory().subscribe(
